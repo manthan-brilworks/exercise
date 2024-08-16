@@ -1,0 +1,32 @@
+<!-- Exercise:
+    Create a form with fields for name, email, and password.
+    Use JavaScript to validate that all fields are filled out before submission.
+    Display an alert if any fields are missing or invalid. -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Exercise-3.css">
+    <title>Exercise 3</title>
+</head>
+<body>
+    <div class="form">
+        <p class="heading">Registration Form </p>
+        <form   novalidate id="form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" >
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" >
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" >
+            <button type="submit" value="submit">Submit</button>
+        </form>
+    </div>
+    
+    <script src="Exercise-3.js"></script>
+</body>
+</html> 
+
