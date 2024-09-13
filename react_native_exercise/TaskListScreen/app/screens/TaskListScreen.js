@@ -35,7 +35,7 @@ const taskList = [
   },
 ];
 
-function TaskList(props) {
+function TaskList() {
   const [descriptionVisible, setDescriptionVisible] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedTask, setSelectedTask] = useState(null);
@@ -86,7 +86,7 @@ function TaskList(props) {
 
       <Modal visible={descriptionVisible} animationType="slide">
         <Screen>
-          <View style={styles.modalContent}>
+          <View>
             {selectedTask && (
               <>
                 <TouchableOpacity onPress={() => setDescriptionVisible(false)}>
@@ -96,16 +96,16 @@ function TaskList(props) {
                     style={styles.closeIcon}
                   />
                 </TouchableOpacity>
-                <AppText style={styles.modalTitle}>
+                <AppText>
                   Task Name: {selectedTask.title}
                 </AppText>
-                <AppText style={styles.modalText}>
+                <AppText>
                   Task Status: {selectedTask.status}
                 </AppText>
-                <AppText style={styles.modalText}>
+                <AppText>
                   Due Date: {selectedTask.dueDate}
                 </AppText>
-                <AppText style={styles.modalText}>
+                <AppText>
                   Description: {selectedTask.description}
                 </AppText>
               </>
