@@ -8,35 +8,43 @@ import {
   Dimensions,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useDeviceOrientation } from '@react-native-community/hooks';
 
 import data from "../data/data";
 import Card from "../components/Card";
 
 const { height, width } = Dimensions.get("window");
-const itemHeight = height - 150;
+const itemHeight = height - 130;
 
-function Heading() {
+function CityGuidesScreen() {
   const [active, setActive] = useState("grid");
-  const [numColumns, setNumColumns] = useState(2); // Default to 2 columns
-  const { landscape } = useDeviceOrientation();
+  const [numColumns, setNumColumns] = useState(2);
+  const [orientation, setOrientation] = useState(height > width ? "portrait" : "landscape");
 
   const toggleView = (view) => {
     setActive(view);
-    if (view === "grid") {
-      setNumColumns(landscape ? 3 : 2);
-    } else {
-      setNumColumns(1);
-    }
+  };
+
+  const updateLayout = () => {
+    const { height, width } = Dimensions.get("window");
+    setOrientation(height > width ? "portrait" : "landscape");
   };
 
   useEffect(() => {
-    // Update the number of columns when the orientation changes
-    if (active === "grid") {
-      setNumColumns(landscape ? 3 : 2);
+    const subscription = Dimensions.addEventListener("change", updateLayout);
+    updateLayout();
+    return subscription?.remove;
+  }, []);
+  
+  
+  
+  useEffect(() => {
+    if (orientation === "landscape") {
+      setNumColumns(active === "grid" ? 3 : 1);
+    } else {
+      setNumColumns(active === "grid" ? 2 : 1);
     }
-  }, [landscape]);
-
+  }, [orientation, active]);
+  
   return (
     <>
       <View style={styles.container}>
@@ -47,14 +55,14 @@ function Heading() {
               name="view-grid"
               size={30}
               color={active === "grid" ? "black" : "gray"}
-            />
+              />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => toggleView("carousel")}>
             <MaterialCommunityIcons
               name="view-carousel"
               size={30}
               color={active === "carousel" ? "black" : "gray"}
-            />
+              />
           </TouchableOpacity>
         </View>
       </View>
@@ -63,18 +71,22 @@ function Heading() {
         data={data}
         key={numColumns}
         keyExtractor={(item) => item.id.toString()}
+        extraData={orientation}
         pagingEnabled
         snapToInterval={itemHeight}
         decelerationRate="fast"
         numColumns={numColumns}
-        renderItem={({ item }) => (
-          <Card
+        renderItem={({ item }) => {
+          const currentStyles = orientation === 'landscape' ? styles.landscape : styles.portrait;
+          const itemStyle = active === "grid" ? currentStyles.gridItem : currentStyles.singleView;
+          return(
+           <Card
             image={item.image}
             cityName={item.cityName}
             description={active === "carousel" ? item.description : null}
-            style={active === "grid" ? styles.gridItem : styles.singleView}
+            style={itemStyle}
           />
-        )}
+        )} }
         contentContainerStyle={{ paddingBottom: 200 }}
       />
     </>
@@ -98,16 +110,30 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  gridItem: {
-    alignSelf: "center",
-    height: 300,
-    width: width > height ? width * 0.3 : width * 0.45, 
+  portrait: {
+    gridItem: {
+      height: 300,
+      width: width * 0.45,
+    },
+    singleView: {
+      height: 750,
+      justifyContent: "center",
+      alignItems: "center",
+      marginBottom: 10,
+    },
   },
-  singleView: {
-    height: itemHeight,
-    justifyContent: "center",
-    alignItems: "center",
+  landscape: {
+    gridItem: {
+      height: 220, 
+      width: 200, 
+    },
+    singleView: {
+      height: 250, 
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+    
+    },
   },
 });
 
-export default Heading;
+export default CityGuidesScreen;

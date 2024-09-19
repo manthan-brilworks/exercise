@@ -1,10 +1,10 @@
 import Screen from './components/Screen';
-import CityGuidiesScreen from './screens/CityGudiesScreen';
+import CityGuidesScreen from './screens/CityGuidesScreen';
 
 function App() {
   return (
     <Screen>
-      <CityGuidiesScreen/>
+      <CityGuidesScreen/>
     </Screen>
   );
 }

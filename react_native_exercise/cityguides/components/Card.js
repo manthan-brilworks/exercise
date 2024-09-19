@@ -39,7 +39,11 @@ export default function Card({ style, image, cityName, description }) {
 }
 
 const styles = StyleSheet.create({
-  image: {
+  card:{
+    flex:1,
+    justifyContent:'space-between'
+  },
+image: {
     margin: 10,
     overflow: "hidden",
     shadowOffset: {
@@ -51,6 +55,7 @@ const styles = StyleSheet.create({
     elevation: 6,
     borderRadius: 25,
     borderCurve: 25,
+    
   },
   fav: {
     position: "absolute",
