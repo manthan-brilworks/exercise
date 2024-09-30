@@ -73,7 +73,7 @@ function CityGuidesScreen() {
         keyExtractor={(item) => item.id.toString()}
         extraData={orientation}
         pagingEnabled
-        snapToInterval={itemHeight}
+        snapToInterval={orientation==='landscape'? 230 : 600}
         decelerationRate="fast"
         numColumns={numColumns}
         renderItem={({ item }) => {
@@ -113,10 +113,10 @@ const styles = StyleSheet.create({
   portrait: {
     gridItem: {
       height: 300,
-      width: width * 0.45,
+      
     },
     singleView: {
-      height: 750,
+      height: 600,
       justifyContent: "center",
       alignItems: "center",
       marginBottom: 10,
@@ -124,11 +124,11 @@ const styles = StyleSheet.create({
   },
   landscape: {
     gridItem: {
-      height: 220, 
+      height: 230, 
       width: 200, 
     },
     singleView: {
-      height: 250, 
+      height: 230, 
       justifyContent: "flex-start",
       alignItems: "flex-start",
     
