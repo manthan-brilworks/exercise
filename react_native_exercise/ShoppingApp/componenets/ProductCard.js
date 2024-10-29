@@ -18,7 +18,7 @@ function ProductCard({ image, title, description, price, rating, onPress }) {
         style={styles.image}
         resizeMode="contain"
       />
-      <View>
+      <View style={styles.content}>
         <Text numberOfLines={2} style={styles.text_title}>
           {title}
         </Text>
@@ -36,8 +36,10 @@ function ProductCard({ image, title, description, price, rating, onPress }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
     marginVertical: 10,
     width: width * 0.45,
     backgroundColor: "#f5f3f2",
@@ -46,45 +48,47 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderColor: "red",
     elevation: 5,
+    justifyContent: 'space-between',
   },
   image: {
     overflow: "hidden",
-    position: "relative",
     borderRadius: 25,
-    height: 200,
-    padding: 10,
+    height: 150,
     width: "100%",
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'space-between', 
   },
   text_title: {
     paddingTop: 15,
     paddingLeft: 10,
     paddingRight: 10,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
   },
   text_description: {
     marginTop: 3,
     paddingLeft: 10,
+    fontSize:13
   },
   text_price: {
     marginTop: 3,
-    fontWeight: "900",
+    fontWeight: "700",
     paddingLeft: 10,
+    fontSize:13
   },
   text_rating: {
     marginTop: 3,
     paddingLeft: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
   },
   details_rating: {
     flexDirection: "row",
     alignItems: "center",
   },
   detailButton: {
-    paddingLeft: 30,
     color: "#3c78c2",
+    marginLeft:20
   },
 });
 

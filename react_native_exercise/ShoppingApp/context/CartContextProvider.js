@@ -27,13 +27,34 @@ export default function CartContextProvider({ children }) {
   }
 
   function decrementItemCount(itemId) {
-    setItems((prevItems) =>
-      prevItems.map((cartItem) =>
-        cartItem.id === itemId && cartItem.count > 1
-          ? { ...cartItem, count: cartItem.count - 1 }
-          : cartItem
-      )
-    );
+    const item = items.find(cartItem => cartItem.id === itemId);
+    
+    if (item && item.count > 1) {
+      setItems(prevItems =>
+        prevItems.map(cartItem =>
+          cartItem.id === itemId
+            ? { ...cartItem, count: cartItem.count - 1 }
+            : cartItem
+        )
+      );
+    } else if (item) {
+      Alert.alert(
+        "Confirm Removal",
+        "This will remove the item from your cart. Do you want to proceed?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel",
+          },
+          {
+            text: "Remove",
+            onPress: () => setItems(prevItems => prevItems.filter(cartItem => cartItem.id !== itemId)),
+          },
+        ],
+        { cancelable: false }
+      );
+    }
   }
 
   function clearItem() {
